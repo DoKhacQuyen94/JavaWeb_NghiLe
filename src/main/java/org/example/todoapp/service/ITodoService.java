@@ -9,4 +9,7 @@ public interface ITodoService {
     List<Todo> getAllTodo();
 
     void addTodo(TodoDTO newTodo);
+
+    void updateTodo(TodoDTO newTodo);
+    void deleteTodo(Long id);
 }

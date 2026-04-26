@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -15,12 +16,16 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class TodoDTO {
+    private Long id;
     @NotBlank(message = "Nội dung không được để trống")
     private String content;
 
-    @NotNull(message = "Vui lòng chọn ngày")
     @FutureOrPresent(message = "Ngày phải từ hôm nay trở đi")
+    @NotNull(message = "Vui lòng chọn ngày, Ngày phải từ hôm nay trở đi")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
+    private boolean status;
+    @NotNull(message = "Không được để trống trạng thái")
     private String priority;
 }
