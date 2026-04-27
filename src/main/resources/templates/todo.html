@@ -14,28 +14,36 @@
 <div th:if="${message}" class="alert alert-success">
   <p th:text="${message}"></p>
 </div>
-<a name="" id="" class="btn btn-primary" th:href="@{|/add|}" role="button">Thêm Mới</a>
+<div class="row">
+<h3>Danh sách của: <span th:text="${ownerName}"></span></h3>
+  <div class="text-right">
+    <a href="?lang=vi" class="btn btn-sm btn-outline-primary">VI</a>
+    <a href="?lang=en" class="btn btn-sm btn-outline-success">EN</a>
+  </div>
+</div>
+
+<a name="" id="" class="btn btn-primary" th:href="@{|/add|}" role="button" th:text="#{add}"></a>
 <table class="table table-striped w-full" >
   <thead class="thead-inverse">
   <tr>
     <th>ID</th>
-    <th>Content</th>
-    <th>dueDate</th>
-    <th>Status</th>
-    <th>Priority</th>
-    <th>Action</th>
+    <th th:text="#{content}"></th>
+    <th th:text="#{duedate}"></th>
+    <th th:text="#{status}"></th>
+    <th th:text="#{priority}"></th>
+    <th th:text="#{action}"></th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="t:${todos}">
     <td scope="row" th:text="${t.id}"></td>
     <td th:text="${t.content}"></td>
-    <td th:text="${t.dueDate}"></td>
-    <td th:text="${t.status ? 'Hoàn Thành':'Chưa Hoàn Thành'}"></td>
-    <td th:text="${t.priority}"></td>
+    <td th:text="${#temporals.format(t.dueDate, 'dd/MM/yyyy')}"></td>
+    <td th:text="${t.status} ? #{status_true} : #{status_false}"></td>
+    <td th:text="#{'priority_' + ${t.priority.toLowerCase()}}"></td>
     <td>
-      <a name="" id="" class="btn btn-primary" th:href="@{|todos/edit/${t.id}|}" role="button">Edit</a>
-      <a name="" id="" class="btn" th:onclick="return confirm('Bạn có muốn xóa task không')" th:href="@{|todos/delete/${t.id}|}" role="button">Delete</a>
+      <a name="" id="" class="btn btn-primary" th:href="@{|todos/edit/${t.id}|}" role="button" th:text="#{edit}"></a>
+      <a name="" id="" class="btn" th:onclick="return confirm('Bạn có muốn xóa task không')" th:href="@{|todos/delete/${t.id}|}" role="button" th:text="#{delete}"></a>
     </td>
   </tr>
 

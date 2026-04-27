@@ -1,6 +1,8 @@
 package org.example.todoapp.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.example.todoapp.dto.TodoDTO;
 import org.example.todoapp.model.Todo;
@@ -18,7 +20,35 @@ public class TodoController {
     private final ITodoService todoService;
 
     @GetMapping
-    public String index(Model model) {
+    public String welcome(Model model) {
+        return "welcome";
+    }
+
+    @PostMapping("/welcome")
+    public String saveName(
+            @RequestParam("name") String name ,
+            HttpSession session,
+            Model model
+    ) {
+
+        if (name == null || name.trim().isEmpty()) {
+            model.addAttribute("error", "Tên không được để trống");
+            return "welcome";
+        }
+        session.setAttribute("ownerName", name);
+        return "redirect:/todos";
+    }
+
+    @GetMapping("/todos")
+    public String index(
+            Model model,
+            HttpSession session
+    ) {
+        if (session.getAttribute("ownerName") == null) {
+            return "redirect:/";
+        }
+        String owner = (String) session.getAttribute("ownerName");
+        model.addAttribute("ownerName", owner);
         model.addAttribute("todos", todoService.getAllTodo());
         return "todo";
     }
@@ -41,7 +71,7 @@ public class TodoController {
             return "addTodo";
         }
         todoService.addTodo(newTodo);
-        return "redirect:/";
+        return "redirect:/todos";
     }
 
     @GetMapping("/todos/edit/{id}")
@@ -70,7 +100,7 @@ public class TodoController {
         System.out.println(todoDTO.getId());
         todoService.updateTodo(todoDTO);
         redirectAttributes.addFlashAttribute("message","Thao tác thành công!");
-        return "redirect:/";
+        return "redirect:/todos";
     }
 
     @GetMapping("/todos/delete/{id}")
@@ -80,6 +110,6 @@ public class TodoController {
     ){
         redirectAttributes.addFlashAttribute("message","Thao tác thành công!");
         todoService.deleteTodo(id);
-        return "redirect:/";
+        return "redirect:/todos";
     }
 }

@@ -13,21 +13,23 @@
 <body>
 <form th:action="@{|/add|}" th:object="${addtodo}" method="post">
     <div class="form-group">
-        <label >Content</label>
+        <label th:text="#{content}"></label>
         <input type="text"
                class="form-control" th:field="*{content}">
         <p th:errors="*{content}" class="text-danger"></p>
     </div>
     <div class="form-group">
-        <label >DueDate</label>
+        <label th:text="#{duedate}"></label>
         <input type="date"
                class="form-control" th:field="*{dueDate}">
         <p th:errors="*{dueDate}" class="text-danger"></p>
     </div>
+    <br>
+    <label th:text="#{priority}"></label>
     <select th:field="*{priority}">
-        <option value="LOW">LOW</option>
-        <option value="MEDIUM">MEDIUM</option>
-        <option value="HIGH">HIGH</option>
+        <option value="LOW" th:text="#{priority_low}"></option>
+        <option value="MEDIUM" th:text="#{priority_medium}"></option>
+        <option value="HIGH" th:text="#{priority_high}"></option>
     </select>
     <p th:errors="*{priority}" class="text-danger"></p>
     <br>

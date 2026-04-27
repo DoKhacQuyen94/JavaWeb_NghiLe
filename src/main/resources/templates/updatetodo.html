@@ -13,36 +13,36 @@
 <body>
 <form th:action="@{|/todos/update|}" th:object="${editTodo}" method="post">
     <div class="form-group">
-        <label >ID</label>
+        <label>ID</label>
         <input type="text"
                class="form-control" th:field="*{id}">
         <p th:errors="*{id}" class="text-danger"></p>
     </div>
     <div class="form-group">
-        <label >Content</label>
+        <label th:text="#{content}"></label>
         <input type="text"
                class="form-control" th:field="*{content}">
         <p th:errors="*{content}" class="text-danger"></p>
     </div>
     <div class="form-group">
-        <label >DueDate</label>
+        <label th:text="#{duedate}">DueDate</label>
         <br>
         <label>
             <input type="date" th:field="*{dueDate}">
         </label>
         <p th:errors="*{dueDate}" class="text-danger"></p>
     </div>
-    <label>Priority</label>
+    <label th:text="#{priority}">Priority</label>
     <select th:field="*{priority}">
-        <option value="LOW">LOW</option>
-        <option value="MEDIUM">MEDIUM</option>
-        <option value="HIGH">HIGH</option>
+        <option value="LOW" th:text="#{priority_low}"></option>
+        <option value="MEDIUM" th:text="#{priority_medium}"></option>
+        <option value="HIGH" th:text="#{priority_high}"></option>
     </select>
     <br>
-    <label>Status</label>
+    <label th:text="#{status}"></label>
     <select th:field="*{status}">
-        <option value="true">Hoàn Thành</option>
-        <option value="false">Chưa Hoàn Thành</option>
+        <option value="true" th:text="#{status_true}"></option>
+        <option value="false" th:text="#{status_false}"></option>
     </select>
     <p th:errors="*{priority}" class="text-danger"></p>
     <br>
